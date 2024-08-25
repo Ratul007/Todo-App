@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:todo_app_getx/app/data/services/storage/repository.dart';
@@ -31,6 +32,8 @@ class HomeController extends GetxController {
   final doneTodos = <dynamic>[].obs;
   var wifiStatus = "".obs;
   var location = "".obs;
+  final ImagePicker picker = ImagePicker();
+  List<XFile> imagePathList = [];
 
   @override
   void onInit() {
@@ -46,6 +49,13 @@ class HomeController extends GetxController {
     // TODO: implement onClose
     formEditCtrl.dispose();
     super.onClose();
+  }
+
+
+  Future<void> pickMultipleImg() async {
+    imagePathList = await picker.pickMultiImage(
+        requestFullMetadata: false, maxHeight: 200, maxWidth: 200);
+    update();
   }
 
   Future<void> getLocation() async {

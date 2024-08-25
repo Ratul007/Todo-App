@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -6,6 +8,7 @@ import 'package:todo_app_getx/app/modules/detail/widgets/done_list.dart';
 import 'package:todo_app_getx/app/modules/home/controller.dart';
 
 import '../../core/utils/extensions.dart';
+import '../../core/values/colors.dart';
 import 'widgets/doing_list.dart';
 
 class DetailPage extends StatelessWidget {
@@ -63,12 +66,66 @@ class DetailPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0.wp,vertical: 2.0.hp),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 8.0.wp, vertical: 2.0.hp),
                 child: Text(
                   task.description,
                   style: TextStyle(fontSize: 12.0.sp),
                 ),
               ),
+              Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 5.0.wp, vertical: 2.0.hp),
+                  child: SizedBox(
+                    width: 386.0.wp,
+                    height: 18.0.hp,
+                    child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: Flexible(
+                          child: homeCtrl.imagePathList
+                                  .isEmpty // Check if the list is empty
+                              ? const Center(
+                                  // Display a message when empty
+                                  child: Text("No Images",
+                                      style: TextStyle(fontSize: 18)),
+                                )
+                              : GridView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  padding: const EdgeInsets.all(20),
+                                  itemCount: homeCtrl.imagePathList.length,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    crossAxisSpacing: 4.0,
+                                    mainAxisSpacing: 4.0,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    return Hero(
+                                      tag: "viewImage",
+                                      child: Image.file(File(
+                                          homeCtrl.imagePathList[index].path)),
+                                    );
+                                  },
+                                ),
+                        )),
+                  )),
+              Padding(padding: EdgeInsets.symmetric(
+                  horizontal: 25.0.wp, vertical: 2.0.hp),child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: darkGreen,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                onPressed: () {
+                  homeCtrl.imagePathList = [];
+                  homeCtrl.pickMultipleImg();
+                },
+                child: const Text("Add Image"),
+              )),
               Obx(
                 () {
                   var totalTodos =
@@ -157,6 +214,9 @@ class DetailPage extends StatelessWidget {
               ),
               DoingList(),
               DoneList(),
+              SizedBox(
+                height: 20.0.hp,
+              ),
             ],
           ),
         ),
