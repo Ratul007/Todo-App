@@ -5,21 +5,10 @@ A Flutter to-do application that allows users to create, manage and track their 
 
 ## Features
 - Create, edit, and delete tasks
-- Add, edit, and delete to-do items for each task
+- Add, edit, and delete to-do items for each task also you can add images
 - Mark to-do items as completed
 - View progress reports for each task
 - User-friendly interface with animations and feedback
-
-## Dependencies
-      - cupertino_icons: ^1.0.2
-      - dotted_border: ^2.0.0+3
-      - equatable: ^2.0.5
-      - flutter: sdk: flutter
-      - flutter_easyloading: ^3.0.5
-      - get: ^4.6.5
-      - get_storage: ^2.1.1
-      - intl: ^0.18.0
-      - step_progress_indicator: ^1.0.2
 
 ## Getting Started
 

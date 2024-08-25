@@ -10,6 +10,7 @@ import 'widgets/doing_list.dart';
 
 class DetailPage extends StatelessWidget {
   final homeCtrl = Get.find<HomeController>();
+
   DetailPage({super.key});
 
   @override
@@ -59,6 +60,13 @@ class DetailPage extends StatelessWidget {
                           fontSize: 12.0.sp, fontWeight: FontWeight.bold),
                     ),
                   ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0.wp,vertical: 2.0.hp),
+                child: Text(
+                  task.description,
+                  style: TextStyle(fontSize: 12.0.sp),
                 ),
               ),
               Obx(

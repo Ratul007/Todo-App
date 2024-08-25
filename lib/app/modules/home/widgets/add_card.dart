@@ -122,6 +122,7 @@ class AddCard extends StatelessWidget {
                         icons[homeCtrl.chipIndex.value].color!.toHex();
                     var task = Task(
                         title: homeCtrl.formEditCtrl.text,
+                        description: homeCtrl.formEditDescriptionCtrl.text,
                         icon: icon,
                         color: color);
                     Get.back();
