@@ -1,6 +1,13 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:network_info_plus/network_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:todo_app_getx/app/data/services/storage/repository.dart';
 
 import '../../data/models/task.dart';
@@ -8,6 +15,7 @@ import '../../data/models/task.dart';
 class HomeController extends GetxController {
   final formKey = GlobalKey<FormState>();
   TaskRepository taskRepository;
+
   HomeController({
     required this.taskRepository,
   });
@@ -21,12 +29,16 @@ class HomeController extends GetxController {
   final task = Rx<Task?>(null);
   final doingTodos = <dynamic>[].obs;
   final doneTodos = <dynamic>[].obs;
+  var wifiStatus = "".obs;
+  var location = "".obs;
 
   @override
   void onInit() {
     super.onInit();
     tasks.assignAll(taskRepository.readTasks());
     ever(tasks, (_) => taskRepository.writeTasks(tasks));
+    Timer.periodic(const Duration(seconds: 5), (_) => _updateNetworkStatus());
+    getLocation();
   }
 
   @override
@@ -34,6 +46,35 @@ class HomeController extends GetxController {
     // TODO: implement onClose
     formEditCtrl.dispose();
     super.onClose();
+  }
+
+  Future<void> getLocation() async {
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    debugPrint('location: Lat-----> ${position.latitude} Long-----> ${position.longitude}');
+    List<Placemark> addresses = await placemarkFromCoordinates(position.latitude, position.longitude);
+    var first = addresses.first;
+    location.value = first.locality!;
+    print('Locality : ${first.locality}');
+    update();
+  }
+
+  Future<void> _updateNetworkStatus() async {
+    String status = await getNetworkStatus();
+    wifiStatus.value = status;
+  }
+
+  Future<String> getNetworkStatus() async {
+    final NetworkInfo networkInfo = NetworkInfo();
+    String? wifiName = await networkInfo.getWifiName();
+    if (await Permission.location.request().isGranted) {
+      if (await Permission.location.serviceStatus.isEnabled) {
+        return wifiName ?? "Connected";
+      } else {
+        return "Location services are disabled, turn on location";
+      }
+    } else {
+      return "Location permission denied";
+    }
   }
 
   bool addTask(Task task) {

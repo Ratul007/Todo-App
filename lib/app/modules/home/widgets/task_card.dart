@@ -36,61 +36,63 @@ class TaskCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            StepProgressIndicator(
-              totalSteps: homeCtrl.isTodoEmpty(task) ? 1 : task.todos!.length,
-              currentStep:
-                  homeCtrl.isTodoEmpty(task) ? 0 : homeCtrl.getDoneTodo(task),
-              size: 5,
-              padding: 0,
-              selectedGradientColor: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [color.withOpacity(0.5), color],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              StepProgressIndicator(
+                totalSteps: homeCtrl.isTodoEmpty(task) ? 1 : task.todos!.length,
+                currentStep:
+                homeCtrl.isTodoEmpty(task) ? 0 : homeCtrl.getDoneTodo(task),
+                size: 5,
+                padding: 0,
+                selectedGradientColor: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [color.withOpacity(0.5), color],
+                ),
+                unselectedGradientColor: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.white, Colors.white],
+                ),
               ),
-              unselectedGradientColor: const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Colors.white, Colors.white],
+              Padding(
+                padding: EdgeInsets.all(6.0.wp),
+                child: Icon(
+                  IconData(task.icon, fontFamily: 'MaterialIcons'),
+                  color: color,
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(6.0.wp),
-              child: Icon(
-                IconData(task.icon, fontFamily: 'MaterialIcons'),
-                color: color,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(6.0.wp),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    task.title,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12.0.sp,
+              Padding(
+                padding: EdgeInsets.all(6.0.wp),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      task.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.0.sp,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(
-                    height: 2.0.wp,
-                  ),
-                  Text(
-                    '${task.todos?.length ?? 0} Tasks',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey,
+                    SizedBox(
+                      height: 2.0.wp,
                     ),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+                    Text(
+                      '${task.todos?.length ?? 0} Tasks',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        )
       ),
     );
   }

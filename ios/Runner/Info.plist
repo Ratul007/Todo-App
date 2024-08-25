@@ -47,5 +47,11 @@
     <true/>
     <key>UIApplicationSupportsIndirectInputEvents</key>
     <true/>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need location access to get Wi-Fi information</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need location access to get Wi-Fi information</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need location access to get Wi-Fi information even when the app is in the background.</string>
   </dict>
 </plist>

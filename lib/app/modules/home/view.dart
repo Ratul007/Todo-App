@@ -22,7 +22,7 @@ class HomePage extends GetView<HomeController> {
             child: ListView(
               children: [
                 Padding(
-                  padding: EdgeInsets.all(4.0.wp),
+                  padding: EdgeInsets.only(left: 4.0.wp,right: 4.0.wp,top: 2.0.hp),
                   child: Text(
                     'My List',
                     style: TextStyle(
@@ -30,6 +30,20 @@ class HomePage extends GetView<HomeController> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    'Wifi Name: ${controller.wifiStatus.value}',
+                    style:  TextStyle(fontSize: 18.0.sp),
+                  )
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Text(
+                      'Location: ${controller.location.value}',
+                      style:  TextStyle(fontSize: 18.0.sp),
+                    )
                 ),
                 Obx(
                   () => GridView.count(
